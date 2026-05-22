@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react"; // add useState
-import CalenderForm from "@components/CalenderForm";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const CalenderForm = dynamic(() => import("@components/CalenderForm"), { ssr: false });
 
 // ── add this hook ──────────────────────────────────────────
 function useInView(threshold = 0.2) {

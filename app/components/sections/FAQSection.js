@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import FAQDesktop from "./FAQDesktop";
-import FAQMobile  from "./FAQMobile";
+import dynamic from "next/dynamic";
+
+const FAQDesktop = dynamic(() => import("./FAQDesktop"), { ssr: false });
+const FAQMobile  = dynamic(() => import("./FAQMobile"), { ssr: false });
 
 export default function FAQSection() {
   const [isMobile, setIsMobile] = useState(null);

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import AccreditationDesktop from "./AccreditationDesktop";
-import AccreditationMobile from "./AccreditationMobile";
+import dynamic from "next/dynamic";
+
+const AccreditationDesktop = dynamic(() => import("./AccreditationDesktop"), { ssr: false });
+const AccreditationMobile = dynamic(() => import("./AccreditationMobile"), { ssr: false });
 
 /**
  * Parent component — renders the correct variant based on device width.

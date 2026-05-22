@@ -1,17 +1,41 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import HeroMobile from "./HeroMobile";
-import HeroDesktop from "./HeroDesktop";
+import dynamic from "next/dynamic";
+
+const HeroDesktop = dynamic(() => import("./HeroDesktop"), { ssr: false });
 
 export default function HeroSection() {
-  return (
-    <>
+  const [isMobile, setIsMobile] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Render HeroMobile during SSR and initial hydration to match SSR payload exactly.
+  if (!mounted) {
+    return (
       <div className="lg:hidden block">
         <HeroMobile visible />
       </div>
-      <div className="hidden lg:block">
+    );
+  }
+
+  return (
+    <>
+      {isMobile ? (
+        <HeroMobile visible />
+      ) : (
         <HeroDesktop visible />
-      </div>
+      )}
     </>
   );
 }

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import AdmissionDesktop from "./AdmissionDesktop";
-import AdmissionMobile  from "./AdmissionMobile";
+import dynamic from "next/dynamic";
+
+const AdmissionDesktop = dynamic(() => import("./AdmissionDesktop"), { ssr: false });
+const AdmissionMobile  = dynamic(() => import("./AdmissionMobile"), { ssr: false });
 
 export default function AdmissionProcess() {
   const [isMobile, setIsMobile] = useState(null);

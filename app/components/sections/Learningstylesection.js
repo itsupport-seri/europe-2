@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import LearningStyleDesktop from "./LearningStyleDesktop";
-import LearningStyleMobile  from "./LearningStyleMobile";
+import dynamic from "next/dynamic";
+
+const LearningStyleDesktop = dynamic(() => import("./LearningStyleDesktop"), { ssr: false });
+const LearningStyleMobile  = dynamic(() => import("./LearningStyleMobile"), { ssr: false });
 
 /**
  * Parent — renders correct variant based on viewport width.

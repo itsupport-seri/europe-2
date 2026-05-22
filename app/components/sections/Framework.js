@@ -2,8 +2,10 @@
 
 "use client";
 import { useEffect, useState } from "react";
-import FrameworkDesktop from "./FrameworkDesktop";
-import FrameworkMobile from "./FrameworkMobile";
+import dynamic from "next/dynamic";
+
+const FrameworkDesktop = dynamic(() => import("./FrameworkDesktop"), { ssr: false });
+const FrameworkMobile = dynamic(() => import("./FrameworkMobile"), { ssr: false });
 
 /**
  * Parent — renders correct variant based on viewport width.

@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import ReviewsDesktop from "./ReviewsDesktop";
-import ReviewsMobile  from "./ReviewsMobile";
+import dynamic from "next/dynamic";
+
+const ReviewsDesktop = dynamic(() => import("./ReviewsDesktop"), { ssr: false });
+const ReviewsMobile  = dynamic(() => import("./ReviewsMobile"), { ssr: false });
 
 /**
  * Parent — SSR-safe conditional render.
