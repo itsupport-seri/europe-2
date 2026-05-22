@@ -19,7 +19,7 @@ import styles from "./HeroDesktop.module.css";
 
 const STAT_ICONS = [Users, Globe, GraduationCap];
 
-export default function HeroDesktop() {
+export default function HeroDesktop({ visible }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imgErrors,   setImgErrors]   = useState({});
 
@@ -29,9 +29,10 @@ export default function HeroDesktop() {
   );
 
   useEffect(() => {
+    if (!visible) return;
     const id = setInterval(() => goTo(activeIndex + 1), 4500);
     return () => clearInterval(id);
-  }, [activeIndex, goTo]);
+  }, [activeIndex, goTo, visible]);
 
   const onImgError = (i) =>
     setImgErrors((prev) => ({ ...prev, [i]: true }));
@@ -181,8 +182,8 @@ export default function HeroDesktop() {
                           fill
                           sizes="(max-width: 1280px) 44vw, 520px"
                           quality={i === 0 ? 80 : 70}
-                          priority={i === 0}
-                          loading={i === 0 ? undefined : "lazy"}
+                          priority={visible && i === 0}
+                          loading={i === 0 && visible ? undefined : "lazy"}
                           decoding="async"
                           style={{ objectFit: "cover" }}
                           onError={() => onImgError(i)}

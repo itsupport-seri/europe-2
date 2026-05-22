@@ -16,7 +16,7 @@ import {
 import { STATS, ACCREDS, SLIDES } from "./heroData";
 import styles from "./HeroMobile.module.css";
 
-export default function HeroMobile() {
+export default function HeroMobile({ visible }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [imgErrors,   setImgErrors]   = useState({});
 
@@ -26,9 +26,10 @@ export default function HeroMobile() {
   );
 
   useEffect(() => {
+    if (!visible) return;
     const id = setInterval(() => goTo(activeIndex + 1), 4500);
     return () => clearInterval(id);
-  }, [activeIndex, goTo]);
+  }, [activeIndex, goTo, visible]);
 
   const onImgError = (i) =>
     setImgErrors((prev) => ({ ...prev, [i]: true }));
@@ -116,8 +117,8 @@ export default function HeroMobile() {
                       fill
                       sizes="100vw"
                       quality={i === 0 ? 75 : 60}
-                      priority={i === 0}
-                      loading={i === 0 ? undefined : "lazy"}
+                      priority={visible && i === 0}
+                      loading={i === 0 && visible ? undefined : "lazy"}
                       decoding="async"
                       style={{ objectFit: "cover", borderRadius: "8px" }}
                       onError={() => onImgError(i)}
